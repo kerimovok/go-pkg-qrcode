@@ -202,13 +202,8 @@ func embedLogo(qrImage image.Image, logoURL string, sizePercent float64) (image.
 	}
 	defer resp.Body.Close()
 
-	// Check content type for better error messages
-	contentType := resp.Header.Get("Content-Type")
-	if contentType != "" && !strings.HasPrefix(contentType, "image/") {
-		return nil, fmt.Errorf("invalid content type: %s (expected image/*)", contentType)
-	}
-
 	// Use imaging.Decode which supports multiple formats (JPEG, PNG, GIF, WebP, etc.)
+	// It will automatically detect the format regardless of Content-Type header
 	logoImg, err := imaging.Decode(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decode logo image: %w", err)
