@@ -13,6 +13,7 @@ import (
 
 	"github.com/disintegration/imaging"
 	"github.com/skip2/go-qrcode"
+	_ "golang.org/x/image/webp"
 )
 
 // Options represents the configuration options for QR code generation
@@ -197,13 +198,22 @@ func getErrorCorrection(level string) qrcode.RecoveryLevel {
 func embedLogo(qrImage image.Image, logoURL string, sizePercent float64) (image.Image, error) {
 	resp, err := http.Get(logoURL)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to fetch logo: %w", err)
 	}
 	defer resp.Body.Close()
-	logoImg, err := png.Decode(resp.Body)
-	if err != nil {
-		return nil, err
+
+	// Check content type for better error messages
+	contentType := resp.Header.Get("Content-Type")
+	if contentType != "" && !strings.HasPrefix(contentType, "image/") {
+		return nil, fmt.Errorf("invalid content type: %s (expected image/*)", contentType)
 	}
+
+	// Use imaging.Decode which supports multiple formats (JPEG, PNG, GIF, WebP, etc.)
+	logoImg, err := imaging.Decode(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode logo image: %w", err)
+	}
+
 	qrSize := qrImage.Bounds().Size()
 	logoWidth := int(float64(qrSize.X) * sizePercent / 100)
 	logoHeight := int(float64(qrSize.Y) * sizePercent / 100)
