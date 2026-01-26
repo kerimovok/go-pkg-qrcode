@@ -1,6 +1,7 @@
 # go-pkg-qrcode
 
-A powerful Go package for generating QR codes with advanced customization options including gradient effects, logo embedding, and flexible styling.
+A powerful Go package for generating QR codes with advanced customization
+options including gradient effects, logo embedding, and flexible styling.
 
 ## 🚀 Features
 
@@ -163,12 +164,12 @@ The package supports multiple color formats:
 
 ### Error Correction Levels
 
-| Level | Description            | Data Recovery |
-|-------|------------------------|---------------|
-| L     | Low                    | ~7%           |
-| M     | Medium (default)       | ~15%          |
-| Q     | High                   | ~25%          |
-| H     | Highest | ~30%          |
+| Level | Description      | Data Recovery |
+| ----- | ---------------- | ------------- |
+| L     | Low              | ~7%           |
+| M     | Medium (default) | ~15%          |
+| Q     | High             | ~25%          |
+| H     | Highest          | ~30%          |
 
 ### Gradient Types
 
@@ -269,22 +270,12 @@ Generates a QR code as a PNG image byte array.
 - `github.com/skip2/go-qrcode` - QR code generation
 - `github.com/disintegration/imaging` - Image processing
 
-## 📝 License
-
-[Your License Here]
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## 🙏 Acknowledgments
 
-- Built on top of [go-qrcode](https://github.com/skip2/go-qrcode) for QR code generation
-- Uses [imaging](https://github.com/disintegration/imaging) for high-quality image processing
+- Built on top of [go-qrcode](https://github.com/skip2/go-qrcode) for QR code
+  generation
+- Uses [imaging](https://github.com/disintegration/imaging) for high-quality
+  image processing
 - Designed for production reliability and developer experience
 
 ---
