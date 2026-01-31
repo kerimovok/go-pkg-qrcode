@@ -60,7 +60,7 @@ func TestGeneratePNG_Basic(t *testing.T) {
 		},
 	}
 
-		for _, tt := range tests {
+	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			pngData, err := GeneratePNG(tt.opts)
 			if (err != nil) != tt.wantErr {
@@ -91,60 +91,60 @@ func TestGeneratePNG_ErrorCorrection(t *testing.T) {
 				Size:  300,
 				Error: level,
 			}
-		pngData, err := GeneratePNG(opts)
-		if err != nil {
-			t.Errorf("GeneratePNG() with error level %s failed: %v", level, err)
-			return
-		}
-		if len(pngData) == 0 {
-			t.Error("GeneratePNG() returned empty PNG")
-		}
+			pngData, err := GeneratePNG(opts)
+			if err != nil {
+				t.Errorf("GeneratePNG() with error level %s failed: %v", level, err)
+				return
+			}
+			if len(pngData) == 0 {
+				t.Error("GeneratePNG() returned empty PNG")
+			}
 		})
 	}
 }
 
 func TestGeneratePNG_Colors(t *testing.T) {
 	tests := []struct {
-		name      string
+		name       string
 		foreground string
 		background string
-		wantErr   bool
+		wantErr    bool
 	}{
 		{
-			name:      "named colors",
+			name:       "named colors",
 			foreground: "black",
 			background: "white",
-			wantErr:   false,
+			wantErr:    false,
 		},
 		{
-			name:      "RGB colors",
+			name:       "RGB colors",
 			foreground: "rgb(255,0,0)",
 			background: "rgb(0,255,0)",
-			wantErr:   false,
+			wantErr:    false,
 		},
 		{
-			name:      "RGBA colors",
+			name:       "RGBA colors",
 			foreground: "rgba(255,0,0,255)",
 			background: "rgba(0,255,0,128)",
-			wantErr:   false,
+			wantErr:    false,
 		},
 		{
-			name:      "mixed colors",
+			name:       "mixed colors",
 			foreground: "red",
 			background: "rgb(240,240,240)",
-			wantErr:   false,
+			wantErr:    false,
 		},
 		{
-			name:      "empty colors use defaults",
+			name:       "empty colors use defaults",
 			foreground: "",
 			background: "",
-			wantErr:   false,
+			wantErr:    false,
 		},
 		{
-			name:      "invalid color format uses default",
+			name:       "invalid color format uses default",
 			foreground: "invalid-color",
 			background: "also-invalid",
-			wantErr:   false, // Should not error, just use defaults
+			wantErr:    false, // Should not error, just use defaults
 		},
 	}
 
@@ -217,61 +217,61 @@ func TestGeneratePNG_Border(t *testing.T) {
 
 func TestGeneratePNG_Gradient(t *testing.T) {
 	tests := []struct {
-		name         string
+		name          string
 		gradientStart string
 		gradientEnd   string
 		gradientType  string
-		wantErr      bool
+		wantErr       bool
 	}{
 		{
-			name:         "linear gradient",
+			name:          "linear gradient",
 			gradientStart: "rgb(255,0,0)",
 			gradientEnd:   "rgb(0,0,255)",
 			gradientType:  "linear",
-			wantErr:      false,
+			wantErr:       false,
 		},
 		{
-			name:         "radial gradient",
+			name:          "radial gradient",
 			gradientStart: "rgb(255,255,255)",
 			gradientEnd:   "rgb(0,0,0)",
 			gradientType:  "radial",
-			wantErr:      false,
+			wantErr:       false,
 		},
 		{
-			name:         "default gradient type",
+			name:          "default gradient type",
 			gradientStart: "rgb(255,0,0)",
 			gradientEnd:   "rgb(0,0,255)",
 			gradientType:  "",
-			wantErr:      false, // Should default to linear
+			wantErr:       false, // Should default to linear
 		},
 		{
-			name:         "invalid gradient type",
+			name:          "invalid gradient type",
 			gradientStart: "rgb(255,0,0)",
 			gradientEnd:   "rgb(0,0,255)",
 			gradientType:  "invalid",
-			wantErr:      false, // Should default to linear
+			wantErr:       false, // Should default to linear
 		},
 		{
-			name:         "gradient with only start color",
+			name:          "gradient with only start color",
 			gradientStart: "rgb(255,0,0)",
 			gradientEnd:   "",
 			gradientType:  "linear",
-			wantErr:      false, // Should not apply gradient
+			wantErr:       false, // Should not apply gradient
 		},
 		{
-			name:         "gradient with only end color",
+			name:          "gradient with only end color",
 			gradientStart: "",
 			gradientEnd:   "rgb(0,0,255)",
 			gradientType:  "linear",
-			wantErr:      false, // Should not apply gradient
+			wantErr:       false, // Should not apply gradient
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			opts := Options{
-				Data:         "https://example.com",
-				Size:         400,
+				Data:          "https://example.com",
+				Size:          400,
 				GradientStart: tt.gradientStart,
 				GradientEnd:   tt.gradientEnd,
 				GradientType:  tt.gradientType,
@@ -467,8 +467,8 @@ func TestGetErrorCorrection(t *testing.T) {
 
 func TestGeneratePNG_ComplexOptions(t *testing.T) {
 	opts := Options{
-		Data:         "https://example.com",
-		Size:         600,
+		Data:          "https://example.com",
+		Size:          600,
 		Foreground:    "rgb(50,50,50)",
 		Background:    "rgb(250,250,250)",
 		GradientStart: "rgb(100,200,255)",
@@ -476,7 +476,7 @@ func TestGeneratePNG_ComplexOptions(t *testing.T) {
 		GradientType:  "linear",
 		Error:         "H",
 		Border:        12,
-		LogoSize:     20.0,
+		LogoSize:      20.0,
 	}
 
 	pngData, err := GeneratePNG(opts)
@@ -513,8 +513,8 @@ func BenchmarkGeneratePNG_Basic(b *testing.B) {
 
 func BenchmarkGeneratePNG_WithGradient(b *testing.B) {
 	opts := Options{
-		Data:         "https://example.com",
-		Size:         400,
+		Data:          "https://example.com",
+		Size:          400,
 		GradientStart: "rgb(255,0,0)",
 		GradientEnd:   "rgb(0,0,255)",
 		GradientType:  "linear",
